@@ -1,13 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import HomepageContainer from './homepage/components/homepage'
-import HeaderContainer from './header/components/header'
+import routes from './routes'
 
-render(
-    <div>
-        <HeaderContainer />
-        <HomepageContainer />
-    </div>
-  , document.getElementById('app')
-)
+render(routes, document.getElementById('app'))
 

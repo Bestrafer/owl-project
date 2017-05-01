@@ -4,7 +4,7 @@ class HomepageContainer extends React.Component {
 
     render() {
         return (
-            <div>Hania to krul!</div>
+            <img style={{}} src="assets/images/Puchacz-zwyczajny.jpg" />
         )
     }
 }
