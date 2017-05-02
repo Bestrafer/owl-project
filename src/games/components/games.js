@@ -2,30 +2,56 @@ import React from 'react';
 import * as gameActions from '../actions/games';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Table } from 'antd'
+
+const columns = [{
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title',
+}, {
+    title: 'Owner',
+    dataIndex: 'owner',
+    key: 'owner',
+}, {
+    title: 'minPlayers',
+    dataIndex: 'minPlayers',
+    key: 'minPlayers',
+}, {
+    title: 'maxPlayers',
+    dataIndex: 'maxPlayers',
+    key: 'maxPlayers',
+}];
+
+var dataSource = [];
 
 class GamesContainer extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleClick = this.handleClick.bind(this);
-        this.showGames = this.showGames.bind(this);
-    }
-
-    handleClick() {
         this.props.actions.getGames();
     }
 
-    showGames() {
-        console.log(this.props.games);
+    pushGamesToTable() {
+        let gameList = this.props.games.games;
+
+        for (var key in gameList) {
+            dataSource = dataSource.concat([{
+                key: key,
+                title: gameList[key].title,
+                owner: gameList[key].owner.name,
+                minPlayers: gameList[key].minNumber,
+                maxPlayers: gameList[key].maxNumber
+            }]);
+        }
     }
     
     render() {
+        this.pushGamesToTable();
+
         return (
             <div>
-                <div>Hania Games!</div>
-
-                <button onClick={this.handleClick}>GET GAMES</button>
-                <button onClick={this.showGames}>SHOW GAMES</button>
+                <h1>GAMES:</h1>
+                <Table dataSource={dataSource} columns={columns} size="middle" />
             </div>
         )
     }
