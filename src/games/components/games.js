@@ -1,39 +1,44 @@
 import React from 'react';
-import * as gameActions from '../actions/games';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Table } from 'antd'
 
-class GamesContainer extends React.Component {
-    constructor(props) {
-        super(props);
+import * as gameActions from '../actions/games';
 
-        this.handleClick = this.handleClick.bind(this);
-        this.showGames = this.showGames.bind(this);
-    }
+const columns = [{
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title',
+}, {
+    title: 'Owner',
+    dataIndex: 'owner',
+    key: 'owner',
+}, {
+    title: 'Min number of players',
+    dataIndex: 'minPlayers',
+    key: 'minPlayers',
+}, {
+    title: 'Max number of players',
+    dataIndex: 'maxPlayers',
+    key: 'maxPlayers',
+}];
 
-    handleClick() {
-        this.props.actions.getGames();
-    }
+const GamesContainer = (props) => {
+    const { games } = props;
 
-    showGames() {
-        console.log(this.props.games);
-    }
-    
-    render() {
-        return (
-            <div>
-                <div>Hania Games!</div>
+    props.actions.getGames();
 
-                <button onClick={this.handleClick}>GET GAMES</button>
-                <button onClick={this.showGames}>SHOW GAMES</button>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <h1>games:</h1>
+            <Table dataSource={games} columns={columns} size="middle" />
+        </div>
+    )
 }
 
 function mapStateToProps(state) {
     return {
-        games: state.games,
+        games: state.games.entities,
     }
 }
 

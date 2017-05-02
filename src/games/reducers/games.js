@@ -1,13 +1,25 @@
 const initialState = {
-    games: [],
+    entities: [],
 }
 
 export function gamesReducer(state = initialState, action) {
     switch (action.type) {
-        case 'GAMES_FETCHED' :
+        case 'GAMES_FETCHED':
         {
-            console.log(action.games);
-            return Object.assign({}, state, {games: action.games});
+            const gameList = action.games;
+            let result = [];
+
+            for (var key in gameList) {
+                result.push(...[{
+                    key,
+                    title: gameList[key].title,
+                    owner: gameList[key].owner.name,
+                    minPlayers: gameList[key].minNumber,
+                    maxPlayers: gameList[key].maxNumber,
+                }]);
+            }
+
+            return Object.assign({}, state, { entities: result });
         }
         default:
             return state;
