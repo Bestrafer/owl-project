@@ -1,8 +1,9 @@
 import React from 'react';
-import * as gameActions from '../actions/games';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Table } from 'antd'
+
+import * as gameActions from '../actions/games';
 
 const columns = [{
     title: 'Title',
@@ -13,11 +14,11 @@ const columns = [{
     dataIndex: 'owner',
     key: 'owner',
 }, {
-    title: 'minPlayers',
+    title: 'Min number of players',
     dataIndex: 'minPlayers',
     key: 'minPlayers',
 }, {
-    title: 'maxPlayers',
+    title: 'Max number of players',
     dataIndex: 'maxPlayers',
     key: 'maxPlayers',
 }];
@@ -32,15 +33,15 @@ class GamesContainer extends React.Component {
     }
 
     pushGamesToTable() {
-        let gameList = this.props.games.games;
+        const gameList = this.props.games;
 
         for (var key in gameList) {
             dataSource = dataSource.concat([{
-                key: key,
+                key,
                 title: gameList[key].title,
                 owner: gameList[key].owner.name,
                 minPlayers: gameList[key].minNumber,
-                maxPlayers: gameList[key].maxNumber
+                maxPlayers: gameList[key].maxNumber,
             }]);
         }
     }
@@ -50,7 +51,7 @@ class GamesContainer extends React.Component {
 
         return (
             <div>
-                <h1>GAMES:</h1>
+                <h1>games:</h1>
                 <Table dataSource={dataSource} columns={columns} size="middle" />
             </div>
         )
@@ -59,7 +60,7 @@ class GamesContainer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        games: state.games,
+        games: state.games.entities,
     }
 }
 
