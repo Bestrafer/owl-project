@@ -23,39 +23,17 @@ const columns = [{
     key: 'maxPlayers',
 }];
 
-var dataSource = [];
+const GamesContainer = (props) => {
+    const { games } = props;
 
-class GamesContainer extends React.Component {
-    constructor(props) {
-        super(props);
+    props.actions.getGames();
 
-        this.props.actions.getGames();
-    }
-
-    pushGamesToTable() {
-        const gameList = this.props.games;
-
-        for (var key in gameList) {
-            dataSource = dataSource.concat([{
-                key,
-                title: gameList[key].title,
-                owner: gameList[key].owner.name,
-                minPlayers: gameList[key].minNumber,
-                maxPlayers: gameList[key].maxNumber,
-            }]);
-        }
-    }
-    
-    render() {
-        this.pushGamesToTable();
-
-        return (
-            <div>
-                <h1>games:</h1>
-                <Table dataSource={dataSource} columns={columns} size="middle" />
-            </div>
-        )
-    }
+    return (
+        <div>
+            <h1>games:</h1>
+            <Table dataSource={games} columns={columns} size="middle" />
+        </div>
+    )
 }
 
 function mapStateToProps(state) {
